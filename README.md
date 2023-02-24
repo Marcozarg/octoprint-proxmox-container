@@ -9,7 +9,7 @@ This one worked for me and I hope this can inspire you.
 Old laptop 1CPU/4core/8GB/SSD<br>
 Prusa MK3s<br>
 Logitech webcam<br>
-Proxmox 7.3-3
+Proxmox 7.3-3<br>
 Octoprint 1.8.6
 
 ## Octoprint container
