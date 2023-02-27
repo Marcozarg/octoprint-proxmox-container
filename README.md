@@ -2,7 +2,7 @@
 <p>
 
 I couldn't find working instructions for 3D printer/Webcam passthrough to octoprint-container.<br>
-This one worked for me and I hope this can inspire you.
+This one worked for me and I hope this can help you too.
 
 ## My setup
 <p>
@@ -22,16 +22,18 @@ Won't go to details here, plenty of instructions on internet.
 v4l2-ctl --list-devices
 chmod o+rw /dev/video2
 chmod o+rw /dev/ttyACM0
-usb devices: lsusb
+usb devices:
+lsusb
 
 nano /etc/pve/lxc/<container ID>.conf
   lxc.cgroup2.devices.allow: c *:* rwm
   lxc.mount.entry: /dev/ttyACM0 dev/ttyACM0 none bind,optional,create=file
   lxc.mount.entry: /dev/video2 dev/video2 none bind,optional,create=file
 
+For both devices:
 nano /etc/udev/rules.d/50-myusb.rules
-  SUBSYSTEMS=="usb", ATTRS{0x2c99}=="067b", ATTRS{0x0002}=="2303", GROUP="users", MODE="0666"
-  SUBSYSTEMS=="usb", ATTRS{0x046d}=="067b", ATTRS{0x0825}=="2303", GROUP="users", MODE="0666"
+  SUBSYSTEMS=="usb", ATTRS{idVendor}=="<Your idVendor>", ATTRS{idProduct}=="<Your idProduct>", GROUP="users", MODE="0666"
+  SUBSYSTEMS=="usb", ATTRS{idVendor}=="<Your idVendor>", ATTRS{idProduct}=="<Your idProduct>", GROUP="users", MODE="0666"
 
 rules reload: udevadm control --reload-rules && service udev restart && udevadm trigger
 reboot container
